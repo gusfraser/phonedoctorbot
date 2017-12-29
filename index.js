@@ -45,8 +45,6 @@ bot.hear(['IPHONESCREEN'], (payload, chat) => {
 });
 
 bot.hear(['IPHONE6SCREEN','IPHONE7SCREEN','IPHONEXSCREEN'], (payload, chat) => {
-    // Send a text message with buttons
-    // Send a text message with buttons
 	chat.say({
 		text: 'The price for fixing your iPhone is (TBC). Our priority service can have this fixed within TBC hours'
     });
@@ -54,28 +52,119 @@ bot.hear(['IPHONE6SCREEN','IPHONE7SCREEN','IPHONEXSCREEN'], (payload, chat) => {
 
 
 bot.hear(['IPHONESCREENHELP'], (payload, chat) => {
-    // Send a text message with buttons
-    // Send a text message with buttons
 	chat.say({
 		text: 'Ok let\'s identify what model you have. [Pics coming soon...]'
     });
 }); 
 
 
-bot.start();
+const mainIssue = (convo) => {
+  /*  bot.getUserProfile().then((user) => {
+        bot.say('Hello, ${user.first_name}! We are open 08:30 - 17:30 Mon - Fri, 09:00 - 17:00 Sat, but our helpful bot is here 24/7!');
+        bot.say('If you want to speak to a human at any time please just write "human"');
+        bot.say('Please excuse us while we test out bot out. We are still here and listening to you :-)');
+    });
+    */
 
-bot.getUserProfile().then((user) => {
-    bot.say('Hello, ${user.first_name}! We are open 08:30 - 17:30 Mon - Fri, 09:00 - 17:00 Sat, but our helpful bot is here 24/7!');
-    bot.say('If you want to speak to a human at any time please just write "human"');
-    bot.say('Please excuse us while we test out bot out. We are still here and listening to you :-)');
-});
+    convo.ask('Hello! We are listening while we test our new bot! We are open 08:30 - 17:30 Mon - Fri, 09:00 - 17:00 Sat, but our helpful bot is here 24/7! \r\nWhat\'s your name?', (payload, convo, data) => {
+      const text = payload.message.text;
+      convo.set('name', text);
+      convo.say('Hi ${text}').then(() => askWhatHelp(convo));
+    });
 
-// Send a button template
-bot.say({
-	text: 'What can we help you with today?',
-	buttons: [
-		{ type: 'postback', title: 'Screen Damage', payload: 'SCREEN' },
+  };
+
+const askWhatHelp = (convo) => {
+    convo.ask((convo) => {
+      const buttons = [
+        { type: 'postback', title: 'Screen Damage', payload: 'SCREEN' },
         { type: 'postback', title: 'Existing Order', payload: 'EXISTINGORDER' },
         { type: 'postback', title: 'Other', payload: 'OTHER' }
-	]
-});
+    ];
+    convo.sendButtonTemplate('What can we help you with today?', buttons);
+    }, (payload, convo, data) => {
+      const text = payload.message.text;
+      convo.set('whathelp', text);
+      convo.say('Thank you').then(() => ask(convo));
+    }, [         
+      {
+        event: 'postback:SCREEN',
+        callback: (payload, convo) => {
+          convo.say('We can repair most screens, we just need to find out a bit more about your model').then(() => askModel(convo));
+        }
+      },
+      {
+        event: 'postback:EXISTINGORDER',
+        callback: (payload, convo) => {
+          convo.say('Thank you').then(() => askOrderNumber(convo));
+        }
+      },
+      {
+        event: 'quick_reply',
+        callback: () => {}
+      },
+      {
+        pattern: ['yes', /yea(h)?/i, 'yup'],
+        callback: () => {
+          convo.say('You said YES!').then(() => askAge(convo));
+        }
+      }
+    ]);
+  };
+
+
+  const askModel = (convo) => {
+    convo.ask((convo) => {
+      const buttons = [
+        { type: 'postback', title: 'iPhone', payload: 'IPHONE' },
+        { type: 'postback', title: 'iPad', payload: 'IPAD' },
+        { type: 'postback', title: 'Samsung', payload: 'SAMSUNG' },
+        { type: 'postback', title: 'Other', payload: 'OTHER' }
+    ];
+    convo.sendButtonTemplate('What kind of device do you have?', buttons);
+    }, (payload, convo, data) => {
+      const text = payload.message.text;
+      convo.set('whatkindofdevice', text);
+      convo.ask(convo);
+    }, [            
+        {
+          event: 'postback:IPHONE',
+          callback: (payload, convo) => {
+            convo.say('Thank you. Now let\'s find out exactly what model').then(() => askIphoneModel(convo));
+          }
+        },
+        {
+            event: 'postback:IPAD',
+            callback: (payload, convo) => {
+              convo.say('Thank you. Now let\'s find out exactly what model').then(() => askIpadModel(convo));
+            }
+          },
+          {
+            event: 'postback:SAMSUNG',
+            callback: (payload, convo) => {
+              convo.say('Thank you. Now let\'s find out exactly what model').then(() => askSamsungModel(convo));
+            }
+          },
+        {
+          event: 'postback:OTHER',
+          callback: (payload, convo) => {
+            convo.say('Thank you. We will get back to you ASAP, please provide further details.').then(() => askOrderNumber(convo));
+          }
+        },
+
+        {
+          event: 'quick_reply',
+          callback: () => {}
+        },
+        {
+          pattern: ['yes', /yea(h)?/i, 'yup'],
+          callback: () => {
+            convo.say('You said YES!').then(() => askAge(convo));
+          }
+        }
+      ]);
+    };    
+
+bot.start();
+
+
