@@ -33,8 +33,7 @@ bot.say({
 bot.hear(['human', 'Human', 'HUMAN'], (payload, chat) => {
 
     chat.say({
-        text: 'We will get back to you as soon as possible within our working hours (08:30 - 17:30 Mon - Fri, 09:00 - 17:00 Sat).');
-        text: 'Thank you for your patience, you can also try calling us on 01534 811999';
+        text: 'We will get back to you as soon as possible within our working hours (08:30 - 17:30 Mon - Fri, 09:00 - 17:00 Sat) \r\n Thank you for your patience, you can also try calling us on 01534 811999'
     })
 
   bot.hear(['SCREEN'], (payload, chat) => {
