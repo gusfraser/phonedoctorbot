@@ -1,14 +1,14 @@
 'use strict'
 
-const express = require('express')
-const bodyParser = require('body-parser')
-const request = require('request')
+//const express = require('express')
+//const bodyParser = require('body-parser')
+//const request = require('request')
 const BootBot = require('bootbot');
-const app = express()
-const token = process.env.FB_PAGE_ACCESS_TOKEN
+//const app = express()
+//const token = process.env.FB_PAGE_ACCESS_TOKEN
 
 const bot = new BootBot({
-    accessToken: token,
+    accessToken: process.env.FB_PAGE_ACCESS_TOKEN,
     verifyToken: 'my_voice_is_my_password_verify_me',
     appSecret: process.env.FB_APP_SECRET
   });
