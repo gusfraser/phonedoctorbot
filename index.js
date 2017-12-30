@@ -8,6 +8,11 @@ const bot = new BootBot({
     appSecret: process.env.FB_APP_SECRET
 });
 
+bot.on('message', (payload, chat) => {
+    const text = payload.message.text;
+    chat.say('Echo: ${text}');
+  });
+
 
 bot.hear(['human', 'Human', 'HUMAN'], (payload, chat) => {
 
@@ -65,7 +70,7 @@ const mainIssue = (convo) => {
         bot.say('Please excuse us while we test out bot out. We are still here and listening to you :-)');
     });
     */
-
+    console.log("mainIssue");
     convo.ask('Hello! We are listening while we test our new bot! We are open 08:30 - 17:30 Mon - Fri, 09:00 - 17:00 Sat, but our helpful bot is here 24/7! \r\nWhat\'s your name?', (payload, convo, data) => {
       const text = payload.message.text;
       convo.set('name', text);
