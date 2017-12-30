@@ -17,9 +17,11 @@ bot.on('message', (payload, chat) => {
   bot.setGetStartedButton((payload, chat) => {
     chat.getUserProfile().then((user) => {
             chat.say('Hello ' + user.first_name);
-          }).then(user).say({
+          });
+        chat.say({
         text: 'What can we help you with today?',
-        quickReplies: ['Screen replacement', 'Existing order', 'Other']
+        quickReplies: ['Screen replacement', 'Existing order', 'Other'],
+        typing: 2000
     });
   });
 
