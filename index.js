@@ -13,6 +13,15 @@ bot.on('message', (payload, chat) => {
     chat.say('We heard you: ' + text);
   });
 
+  bot.setGreetingText('Hello! We are listening while we test our new bot! We are open 08:30 - 17:30 Mon - Fri, 09:00 - 17:00 Sat, but our helpful bot is here 24/7!');
+  bot.setGetStartedButton((payload, chat) => {
+    chat.say('What can we help you with?');
+    chat.say({
+        text: 'What can we help you with today?',
+        quickReplies: ['Screen replacement', 'Existing order', 'Other']
+    });
+  });
+
 
 bot.hear(['human'], (payload, chat) => {
 
@@ -20,7 +29,7 @@ bot.hear(['human'], (payload, chat) => {
 
 });
 
-bot.hear(['SCREEN'], (payload, chat) => {
+bot.hear(['Screen replacement'], (payload, chat) => {
 	// Send a text message with buttons
 	chat.say({
 		text: 'Sorry to hear you have a problem with your screen. We can fix that for you. What kind of device to you have?',
@@ -31,6 +40,8 @@ bot.hear(['SCREEN'], (payload, chat) => {
 		]
 	});
 });
+
+
 
 bot.hear(['APPLESCREEN'], (payload, chat) => {
     chat.say({
@@ -47,7 +58,7 @@ bot.hear(['IPHONESCREEN'], (payload, chat) => {
     // Send a text message with buttons
 	chat.say({
         text: 'To help you further we need to identify what model of iPhone you have.',
-        quickReplies: ['iPhone 6', 'iPhone 7', 'iPhone 8', 'iPhone X','Don\'t know']
+        quickReplies: ['iPhone X', 'iPhone 8', 'iPhone 7', 'iPhone','Don\'t know']
     });
 });
 
