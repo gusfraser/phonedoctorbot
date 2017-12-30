@@ -10,15 +10,13 @@ const bot = new BootBot({
 
 bot.on('message', (payload, chat) => {
     const text = payload.message.text;
-    chat.say('Echo: ${text}');
+    chat.say('We heard you: ' + text);
   });
 
 
 bot.hear(['human', 'Human', 'HUMAN'], (payload, chat) => {
 
-    chat.say({
-        text: 'We will get back to you as soon as possible within our working hours (08:30 - 17:30 Mon - Fri, 09:00 - 17:00 Sat) \r\n Thank you for your patience, you can also try calling us on 01534 811999'
-    });
+    chat.say('We will get back to you as soon as possible within our working hours (08:30 - 17:30 Mon - Fri, 09:00 - 17:00 Sat) \r\n Thank you for your patience, you can also try calling us on 01534 811999');
 
 });
 
