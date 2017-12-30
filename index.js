@@ -37,12 +37,13 @@ bot.hear(['Screen replacement'], (payload, chat) => {
         // ask(question, answer, callbacks, options) {
         //  if (!question || !answer || typeof answer !== 'function') {
         //  return console.error(`You need to specify a question and answer to ask`);
-        convo.ask({
+        convo.ask(
+            {
             text: 'Sorry to hear you have a problem with your screen. We can fix that for you. What kind of device do you have?',
             quickReplies: [ 'iPhone', 'iPad', 'Samsung', 'Other' ]
-        })
-        ,
-        (payload, convo, data) => {
+            }
+            ,        
+            (payload, convo, data) => {
             const text = payload.message.text;
             convo.set('DeviceType', text);
             if(text == 'iPhone')
@@ -57,7 +58,9 @@ bot.hear(['Screen replacement'], (payload, chat) => {
             {
                 convo.say('We can fix most phones, please can you let us know what model you have and any further details about the issue? We will get back to you ASAP');
             }           
-          }
+        }
+       
+    );
     
          
 
