@@ -14,7 +14,7 @@ bot.on('message', (payload, chat) => {
   });
 
 
-bot.hear(['human', 'Human', 'HUMAN'], (payload, chat) => {
+bot.hear(['human'], (payload, chat) => {
 
     chat.say('We will get back to you as soon as possible within our working hours (08:30 - 17:30 Mon - Fri, 09:00 - 17:00 Sat) \r\n Thank you for your patience, you can also try calling us on 01534 811999');
 
@@ -23,12 +23,21 @@ bot.hear(['human', 'Human', 'HUMAN'], (payload, chat) => {
 bot.hear(['SCREEN'], (payload, chat) => {
 	// Send a text message with buttons
 	chat.say({
-		text: 'Sorry to hear you have a problem with your screen. What kind of device to you have?',
+		text: 'Sorry to hear you have a problem with your screen. We can fix that for you. What kind of device to you have?',
+		buttons: [
+            { type: 'postback', title: 'iPhone or iPad', payload: 'APPLESCREEN' },
+            { type: 'postback', title: 'Samsung Phone', payload: 'SAMSUNGSCREEN' },
+            { type: 'postback', title: 'Other', payload: 'OTHERSCREEN' }
+		]
+	});
+});
+
+bot.hear(['APPLESCREEN'], (payload, chat) => {
+    chat.say({
+		text: 'Is it an iPad or iPhone?',
 		buttons: [
             { type: 'postback', title: 'iPhone', payload: 'IPHONESCREEN' },
-            { type: 'postback', title: 'iPad', payload: 'IPADSCREEN' },
-            { type: 'postback', title: 'Samsung', payload: 'SAMSUNGSCREEN' },
-            { type: 'postback', title: 'Other', payload: 'OTHERSCREEN' }
+            { type: 'postback', title: 'Samsung', payload: 'IPADCREEN' }
 		]
 	});
 });
@@ -37,13 +46,8 @@ bot.hear(['IPHONESCREEN'], (payload, chat) => {
     // Send a text message with buttons
     // Send a text message with buttons
 	chat.say({
-		text: 'To help you further we need to identify what model of iPhone you have.',
-		buttons: [
-            { type: 'postback', title: 'iPhone 6', payload: 'IPHONE6SCREEN' },
-            { type: 'postback', title: 'iPhone 7', payload: 'IPHONE7SCREEN' },
-            { type: 'postback', title: 'iPhone X', payload: 'IPHONEXSCREEN' },
-            { type: 'postback', title: 'Don\'t know', payload: 'IPHONESCREENHELP' }
-		]
+        text: 'To help you further we need to identify what model of iPhone you have.',
+        quickReplies: ['iPhone 6', 'iPhone 7', 'iPhone 8', 'iPhone X','Don\'t know']
     });
 });
 
@@ -60,6 +64,17 @@ bot.hear(['IPHONESCREENHELP'], (payload, chat) => {
     });
 }); 
 
+
+bot.on('hello', (payload, chat) => {
+  
+    console.log("hello");
+    convo.ask('Hello! We are listening while we test our new bot! We are open 08:30 - 17:30 Mon - Fri, 09:00 - 17:00 Sat, but our helpful bot is here 24/7! \r\nWhat\'s your name?', (payload, convo, data) => {
+      const text = payload.message.text;
+      convo.set('name', text);
+      convo.say('Hi ${text}').then(() => askWhatHelp(convo));
+    });
+
+});
 
 const mainIssue = (convo) => {
   /*  bot.getUserProfile().then((user) => {
