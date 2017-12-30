@@ -29,7 +29,26 @@ bot.hear(['human'], (payload, chat) => {
 });
 
 bot.hear(['Screen replacement'], (payload, chat) => {
-	// Send a text message with buttons
+  
+    chat.conversation(convo => {
+        convo.ask({
+            text: 'Sorry to hear you have a problem with your screen. We can fix that for you. What kind of device do you have?',
+            quickReplies: [ 'iPhone', 'iPad', 'Samsung', 'Other' ]
+        })
+        ,
+        {
+            event: 'quick_reply:iPhone',
+            callback: () => {
+                convo.ask({
+                    text: 'We just need a few more details about your iPhone. What model do you have?',
+                    quickReplies: ['Don\'t know','X','8','8 Plus','7','7 Plus','6']
+                })
+          }
+        }
+         
+
+    });
+
 	chat.say({
 		text: 'Sorry to hear you have a problem with your screen. We can fix that for you. What kind of device to you have?',
 		buttons: [
