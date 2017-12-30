@@ -49,14 +49,14 @@ bot.hear(['Screen replacement'], (payload, chat) => {
 
     });
 
-	chat.say({
+	/* chat.say({
 		text: 'Sorry to hear you have a problem with your screen. We can fix that for you. What kind of device to you have?',
 		buttons: [
             { type: 'postback', title: 'iPhone or iPad', payload: 'APPLESCREEN' },
             { type: 'postback', title: 'Samsung Phone', payload: 'SAMSUNGSCREEN' },
             { type: 'postback', title: 'Other', payload: 'OTHERSCREEN' }
 		]
-	});
+	}); */
 });
 
 
