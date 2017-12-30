@@ -16,9 +16,8 @@ bot.on('message', (payload, chat) => {
   bot.setGreetingText('Hello! We are listening while we test our new bot! We are open 08:30 - 17:30 Mon - Fri, 09:00 - 17:00 Sat, but our helpful bot is here 24/7!');
   bot.setGetStartedButton((payload, chat) => {
     chat.getUserProfile().then((user) => {
-            chat.say('Hello, ' + user.first_name);
-          });          
-      chat.say({
+            chat.say('Hello ' + user.first_name);
+          }).then(user).say({
         text: 'What can we help you with today?',
         quickReplies: ['Screen replacement', 'Existing order', 'Other']
     });
@@ -26,7 +25,7 @@ bot.on('message', (payload, chat) => {
 
 bot.hear(['human','help'], (payload, chat) => {
 
-    chat.say('One of our friendly human will get back to you as soon as possible within our working hours (08:30 - 17:30 Mon - Fri, 09:00 - 17:00 Sat) \r\n Thank you for your patience, you can also try calling us on 01534 811999');
+    chat.say('One of our friendly humans will get back to you as soon as possible within our working hours (08:30 - 17:30 Mon - Fri, 09:00 - 17:00 Sat) \r\n Thank you for your patience, you can also try calling us on 01534 811999');
 
 }); 
 
@@ -182,24 +181,28 @@ const askWhatHelp = (convo) => {
     convo.ask({
             text: 'To help you further we need to identify what model of iPhone you have.',
             quickReplies: ['iPhone X', 'iPhone 8', 'iPhone 7', 'iPhone','Don\'t know']
-        })
+        }
         ,
         (payload, convo, data) => {
             const text = payload.message.text;
+            convo.say("That will cost TBC to replace an " + text + " screen. We can have this done for you with our express service in 4 working hours, or a typical 2 day turnaround.")
             Console.log("askiPhoneModel:" + text);
         }
+    )
     };
 
     const askIpadModel = (convo) => {
         convo.ask({
                 text: 'To help you further we need to identify what model of iPhone you have.',
                 quickReplies: ['iPad Mini', 'iPad', 'iPad Pro', 'Don\'t know']
-            })
+            }
             ,
             (payload, convo, data) => {
                 const text = payload.message.text;
+                convo.say("That will cost TBC to replace an " + text + " screen. We can have this done for you with our express service in 4 working hours, or a typical 2 day turnaround.")     
                 Console.log("askiPadModel:" + text);
             }
+        )
         };
 
 
