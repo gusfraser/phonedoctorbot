@@ -190,7 +190,7 @@ const askWhatHelp = (convo) => {
         (payload, convo, data) => {
             const text = payload.message.text;
             convo.say("That will cost TBC to replace an " + text + " screen. We can have this done for you with our express service in 4 working hours, or a typical 2 day turnaround.")
-            Console.log("askiPhoneModel:" + text);
+            console.log("askiPhoneModel:" + text);
         }
     )
     };
@@ -204,7 +204,7 @@ const askWhatHelp = (convo) => {
             (payload, convo, data) => {
                 const text = payload.message.text;
                 convo.say("That will cost TBC to replace an " + text + " screen. We can have this done for you with our express service in 4 working hours, or a typical 2 day turnaround.")     
-                Console.log("askiPadModel:" + text);
+                console.log("askiPadModel:" + text);
             }
         )
         };
