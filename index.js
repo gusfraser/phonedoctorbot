@@ -10,13 +10,12 @@ const bot = new BootBot({
 
 bot.on('message', (payload, chat) => {
     const text = payload.message.text;
-    chat.say('We heard you: ' + text);
+    console.log('We heard you: ' + text);
   });
 
   bot.setGreetingText('Hello! We are listening while we test our new bot! We are open 08:30 - 17:30 Mon - Fri, 09:00 - 17:00 Sat, but our helpful bot is here 24/7!');
   bot.setGetStartedButton((payload, chat) => {
-    chat.say('What can we help you with?');
-    chat.say({
+      chat.say({
         text: 'What can we help you with today?',
         quickReplies: ['Screen replacement', 'Existing order', 'Other']
     });
