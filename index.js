@@ -28,23 +28,37 @@ bot.hear(['human'], (payload, chat) => {
 
 });
 
+
 bot.hear(['Screen replacement'], (payload, chat) => {
   
+   
     chat.conversation(convo => {
+         // method sig: 
+        // ask(question, answer, callbacks, options) {
+        //  if (!question || !answer || typeof answer !== 'function') {
+        //  return console.error(`You need to specify a question and answer to ask`);
         convo.ask({
             text: 'Sorry to hear you have a problem with your screen. We can fix that for you. What kind of device do you have?',
             quickReplies: [ 'iPhone', 'iPad', 'Samsung', 'Other' ]
         })
         ,
-        {
-            event: 'quick_reply:iPhone',
-            callback: () => {
-                convo.ask({
-                    text: 'We just need a few more details about your iPhone. What model do you have?',
-                    quickReplies: ['Don\'t know','X','8','8 Plus','7','7 Plus','6']
-                })
+        (payload, convo, data) => {
+            const text = payload.message.text;
+            convo.set('DeviceType', text);
+            if(text == 'iPhone')
+            {
+                askIphoneModel(convo);
+            }
+            else if(text == 'iPad')
+            {
+                askIpadModel(convo);
+            }
+            else if(text == 'Other')
+            {
+                convo.say('We can fix most phones, please can you let us know what model you have and any further details about the issue? We will get back to you ASAP');
+            }           
           }
-        }
+    
          
 
     });
@@ -87,7 +101,7 @@ bot.hear(['IPHONE6SCREEN','IPHONE7SCREEN','IPHONEXSCREEN'], (payload, chat) => {
 });
 
 
-bot.hear(['IPHONESCREENHELP'], (payload, chat) => {
+bot.hear([' '], (payload, chat) => {
 	chat.say({
 		text: 'Ok let\'s identify what model you have. [Pics coming soon...]'
     });
@@ -158,6 +172,30 @@ const askWhatHelp = (convo) => {
       }
     ]);
   };
+
+  const askiPhoneModel = (convo) => {
+    convo.ask({
+            text: 'To help you further we need to identify what model of iPhone you have.',
+            quickReplies: ['iPhone X', 'iPhone 8', 'iPhone 7', 'iPhone','Don\'t know']
+        })
+        ,
+        (payload, convo, data) => {
+            const text = payload.message.text;
+            Console.log("askiPhoneModel:" + text);
+        }
+    };
+
+    const askiPadModel = (convo) => {
+        convo.ask({
+                text: 'To help you further we need to identify what model of iPhone you have.',
+                quickReplies: ['iPad Mini', 'iPad', 'iPad Pro', 'Don\'t know']
+            })
+            ,
+            (payload, convo, data) => {
+                const text = payload.message.text;
+                Console.log("askiPadModel:" + text);
+            }
+        };
 
 
   const askModel = (convo) => {
