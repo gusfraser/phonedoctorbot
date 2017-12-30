@@ -16,13 +16,18 @@ bot.on('message', (payload, chat) => {
   bot.setGreetingText('Hello! We are listening while we test our new bot! We are open 08:30 - 17:30 Mon - Fri, 09:00 - 17:00 Sat, but our helpful bot is here 24/7!');
   bot.setGetStartedButton((payload, chat) => {
     chat.getUserProfile().then((user) => {
-            chat.say('Hello ' + user.first_name);
+        chat.say(
+                {
+                    text: 'Hello ' + user.first_name,
+                    typing: 2000
+                }
+                );
           });
         chat.say({
-        text: 'What can we help you with today?',
-        quickReplies: ['Screen replacement', 'Existing order', 'Other'],
-        typing: 2000
-    });
+            text: 'What can we help you with today?',
+            quickReplies: ['Screen replacement', 'Existing order', 'Other'],
+            typing: 2000
+        });
   });
 
 bot.hear(['human','help'], (payload, chat) => {
