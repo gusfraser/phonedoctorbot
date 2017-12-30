@@ -120,13 +120,13 @@ const askWhatHelp = (convo) => {
 
   const askModel = (convo) => {
     convo.ask((convo) => {
-      const buttons = [
+      const buttons2 = [
         { type: 'postback', title: 'iPhone', payload: 'IPHONE' },
         { type: 'postback', title: 'iPad', payload: 'IPAD' },
         { type: 'postback', title: 'Samsung', payload: 'SAMSUNG' },
         { type: 'postback', title: 'Other', payload: 'OTHER' }
     ];
-    convo.sendButtonTemplate('What kind of device do you have?', buttons);
+    convo.sendButtonTemplate('What kind of device do you have?', buttons2);
     }, (payload, convo, data) => {
       const text = payload.message.text;
       convo.set('whatkindofdevice', text);
@@ -160,13 +160,8 @@ const askWhatHelp = (convo) => {
         {
           event: 'quick_reply',
           callback: () => {}
-        },
-        {
-          pattern: ['yes', /yea(h)?/i, 'yup'],
-          callback: () => {
-            convo.say('You said YES!').then(() => askAge(convo));
-          }
         }
+        
       ]);
     };    
 
