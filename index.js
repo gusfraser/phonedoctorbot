@@ -210,52 +210,7 @@ const askWhatHelp = (convo) => {
         };
 
 
-  const askModel = (convo) => {
-    convo.ask((convo) => {
-      const buttons2 = [
-        { type: 'postback', title: 'iPhone', payload: 'IPHONE' },
-        { type: 'postback', title: 'iPad', payload: 'IPAD' },
-        { type: 'postback', title: 'Samsung', payload: 'SAMSUNG' },
-        { type: 'postback', title: 'Other', payload: 'OTHER' }
-    ];
-    convo.sendButtonTemplate('What kind of device do you have?', buttons2);
-    }, (payload, convo, data) => {
-      const text = payload.message.text;
-      convo.set('whatkindofdevice', text);
-      convo.ask(convo);
-    }, [            
-        {
-          event: 'postback:IPHONE',
-          callback: (payload, convo) => {
-            convo.say('Thank you. Now let\'s find out exactly what model').then(() => askIphoneModel(convo));
-          }
-        },
-        {
-            event: 'postback:IPAD',
-            callback: (payload, convo) => {
-              convo.say('Thank you. Now let\'s find out exactly what model').then(() => askIpadModel(convo));
-            }
-          },
-          {
-            event: 'postback:SAMSUNG',
-            callback: (payload, convo) => {
-              convo.say('Thank you. Now let\'s find out exactly what model').then(() => askSamsungModel(convo));
-            }
-          },
-        {
-          event: 'postback:OTHER',
-          callback: (payload, convo) => {
-            convo.say('Thank you. We will get back to you ASAP, please provide further details.').then(() => askOrderNumber(convo));
-          }
-        },
-
-        {
-          event: 'quick_reply',
-          callback: () => {}
-        }
-        
-      ]);
-    };    
+ 
 
 bot.start();
 
