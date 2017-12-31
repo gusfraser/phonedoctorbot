@@ -17,11 +17,11 @@ bot.on('message', (payload, chat) => {
   
   bot.setGetStartedButton((payload, chat) => {
     chat.getUserProfile().then((user) => {
-        chat.say('Hello ' + user.first_name, { typing: 4000 }).then(() => {
+        chat.say('Hello ' + user.first_name, { typing: 1000 }).then(() => {
                 chat.say({
                     text: 'What can we help you with today?',
                     quickReplies: ['Screen replacement', 'Existing order', 'Other'],
-                    typing: 4000
+                    typing: 1000
                 });
             });        
         });
@@ -45,7 +45,8 @@ bot.hear(['Screen replacement'], (payload, chat) => {
         convo.ask(
             {
             text: 'Sorry to hear you have a problem with your screen. We can fix that for you. What kind of device do you have?',
-            quickReplies: [ 'iPhone', 'iPad', 'Samsung', 'Other' ]
+            quickReplies: [ 'iPhone', 'iPad', 'Samsung', 'Other' ],
+            typing: true
             }
             ,        
             (payload, convo, data) => {
@@ -184,7 +185,8 @@ const askWhatHelp = (convo) => {
   const askIphoneModel = (convo) => {
     convo.ask({
             text: 'To help you further we need to identify what model of iPhone you have.',
-            quickReplies: ['iPhone X', 'iPhone 8', 'iPhone 7', 'iPhone','Don\'t know']
+            quickReplies: ['iPhone X', 'iPhone 8', 'iPhone 7', 'iPhone','Don\'t know'],
+            typing: true
         }
         ,
         (payload, convo, data) => {
@@ -198,7 +200,8 @@ const askWhatHelp = (convo) => {
     const askIpadModel = (convo) => {
         convo.ask({
                 text: 'To help you further we need to identify what model of iPhone you have.',
-                quickReplies: ['iPad Mini', 'iPad', 'iPad Pro', 'Don\'t know']
+                quickReplies: ['iPad Mini', 'iPad', 'iPad Pro', 'Don\'t know'],
+                typing: true
             }
             ,
             (payload, convo, data) => {
